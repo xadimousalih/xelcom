@@ -1,0 +1,58 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<style media="screen" type="text/css">
+.ui-widget,.ui-widget,.ui-widget {
+	font-size: 90% !important;
+}
+</style>
+	<p:tabMenu activeIndex="0">
+		<p:menuitem value="Add User" url="/index.jsf" />
+		<p:menuitem value="View User" url="/viewUser.jsf" />
+	</p:tabMenu>
+	<h:form>
+		<p:panel header="Add User">
+			<h:panelGrid columns="4" >
+				<h:outputText value="User Name" />
+				<p:inputText value="#{rBean.name}"></p:inputText>
+				<h:outputText value="Nom" />
+				<p:inputText value="#{rBean.nom}"></p:inputText>
+				<h:outputText value="Prénom" />
+				<p:inputText value="#{rBean.prenom}"></p:inputText>
+				<h:outputText value="Profession" />
+				<p:inputText value="#{rBean.profession}"></p:inputText>
+				<h:outputText value="Téléphone" />
+				<p:inputText value="#{rBean.telephone}"></p:inputText>
+				<h:outputText value="Kurele" />
+				<p:inputText value="#{rBean.kurel}"></p:inputText>
+				<h:outputText value="Date de naissance" />
+				<p:calendar id="button" value="#{rBean.datenais}" showOn="button" pattern="dd-MM-yyyy"/>				
+				<h:outputText value="User Address" />
+				<p:inputTextarea value="#{rBean.address}" rows="1" cols="18" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
+			    <h:outputText value="" /><h:outputText value="" /><h:outputText value="" />					   
+			   <h:outputText id="display" />
+				<h:outputText value="Add Photo" />
+				<p:commandButton onclick="fileDialogWidget.show()"
+					value="Upload Photo"></p:commandButton>
+			</h:panelGrid>
+		</p:panel>
+		<p:separator></p:separator>
+		<p:commandButton actionListener="#{rBean.addUser}"
+			value="Add User Photo"></p:commandButton>
+		<p:dialog id="fileDialog" header="Basic Dialog"
+			widgetVar="fileDialogWidget" minHeight="40">
+			<p:fileUpload fileUploadListener="#{rBean.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" sizeLimit="100000"
+				fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+				oncomplete="fileDialogWidget.hide()" />
+		</p:dialog>
+
+	</h:form>
+	
+</h:body>
+</html>

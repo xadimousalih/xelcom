@@ -1,0 +1,199 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<!-- html source code -->
+	<link type="text/css" rel="stylesheet"
+		href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-glass-x" />
+</h:head>
+<h:body>
+<style media="screen" type="text/css">
+	.ui-widget,.ui-widget,.ui-widget {
+		font-size: 90% !important;
+	}
+}
+</style>
+	<p:tabMenu activeIndex="0">
+		<p:menuitem value="Add User" url="/index.jsf" />
+		<p:menuitem value="View User" url="/viewUser.jsf" />
+	</p:tabMenu>
+
+	<h:form id="form">
+
+		<p:dataTable value="#{rBean.users}" var="user"
+			selection="#{rBean.selectedUser}" selectionMode="single"
+			rowKey="#{user.id}" id="pdataTable" rows="10" paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15">
+
+			<p:column sortBy="#{user.username}">
+				<f:facet name="header">
+					<h:outputText value="Username" />
+				</f:facet>
+				<p:commandLink value="#{user.username}"
+					update=":userEditForm:edition" oncomplete="userDialog.show()"
+					title="View">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{rBean.selectedUser}" />
+				</p:commandLink>
+			</p:column>
+			<p:column headerText="Nom" filterBy="#{user.nom}"
+				sortBy="#{user.nom}">
+				<div style="text-align: left;">#{user.nom}</div>
+			</p:column>
+			<p:column headerText="Prénom" filterBy="#{user.prenom}"
+				sortBy="#{user.prenom}">
+				<div style="text-align: left;">#{user.prenom}</div>
+			</p:column>
+			<p:column headerText="Profession" filterBy="#{user.profession}"
+				sortBy="#{user.profession}">
+				<div style="text-align: left;">#{user.profession}</div>
+			</p:column>
+			<p:column headerText="Téléphone" filterBy="#{user.telephone}"
+				sortBy="#{user.telephone}">
+				<div style="text-align: left;">#{user.telephone}</div>
+			</p:column>
+			<p:column headerText="Dahira" filterBy="#{user.kurel}"
+				sortBy="#{user.kurel}">
+				<div style="text-align: left;">#{user.kurel}</div>
+			</p:column>
+			<p:column headerText="address" filterBy="#{user.address}"
+				sortBy="#{user.address}">
+				<div style="text-align: left;">#{user.address}</div>
+			</p:column>
+			<p:column headerText="photo name"
+				filterBy="#{user.photoId.photoName}"
+				sortBy="#{user.photoId.photoName}" rendered="false">
+				<div style="text-align: center;">#{user.photoId.photoName}</div>
+			</p:column>
+			<p:column headerText="photo">
+				<div style="text-align: center;">
+					<p:graphicImage value="#{imgBean.image}" height="100" width="150">
+						<f:param value="#{user.photoId.photoId}" name="photo_id">
+						</f:param>
+					</p:graphicImage>
+				</div>
+			</p:column>
+			<p:column>
+				<div style="text-align: center;">
+					<f:facet name="header">Action</f:facet>
+					<p:commandButton update=":userViewForm:glob"
+						oncomplete="imgWidget.show()" image="ui-icon ui-icon-search">
+						<f:setPropertyActionListener value="#{user}"
+							target="#{rBean.selectedUser}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash" title="Delete User"
+						action="#{rBean.deleteUser(user.id)}" ajax="false" />
+					<p:commandButton ajax="false" icon="ui-icon-arrowthick-1-s"
+						title="Download User Photo">
+						<f:setPropertyActionListener value="#{user}"
+							target="#{rBean.selectedUser}" />
+						<p:fileDownload value="#{rBean.content}" />
+					</p:commandButton>
+				</div>
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+
+
+	<p:dialog id="img" header="User Informations" widgetVar="imgWidget"
+		height="400" width="100%">
+		<h:form id="userViewForm">
+
+			<h:panelGrid id="glob" columns="2" cellpadding="4">
+				<p:outputPanel id="imgPanel">
+					<p:graphicImage value="#{imgBean.image}" dynamic="true">
+						<f:param value="#{rBean.selectedUser.photoId.photoId}"
+							name="photo_id">
+						</f:param>
+					</p:graphicImage>
+				</p:outputPanel>
+
+
+				<h:panelGrid columns="4" cellpadding="4">
+					<h:outputText value="User Name:" />
+					<h:outputText value="#{rBean.selectedUser.username}"></h:outputText>
+					<h:outputText value="Nom:" />
+					<h:outputText value="#{rBean.selectedUser.nom}"></h:outputText>
+					<h:outputText value="Prénom:" />
+					<h:outputText value="#{rBean.selectedUser.prenom}"></h:outputText>
+					<h:outputText value="Profession:" />
+					<h:outputText value="#{rBean.selectedUser.profession}"></h:outputText>
+					<h:outputText value="Téléphone:" />
+					<h:outputText value="#{rBean.selectedUser.telephone}"></h:outputText>
+					<h:outputText value="Kurel:" />
+					<h:outputText value="#{rBean.selectedUser.kurel}"></h:outputText>
+					<h:outputText value="Date de naissance:" />
+					<h:outputText value="#{rBean.selectedUser.datenais}"></h:outputText>
+					<h:outputText value="Address:" />
+					<h:outputText value="#{rBean.selectedUser.address}"></h:outputText>
+
+				</h:panelGrid>
+
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	<p:dialog id="userDlg" header="User Detail" widgetVar="userDialog"
+		height="500" width="200">
+
+		<h:form id="userEditForm">
+			<h:panelGrid id="edition" columns="4" cellpadding="4">
+
+
+				<h:outputText value="User Name:" />
+				<p:inputText value="#{rBean.selectedUser.username}"></p:inputText>
+				<h:outputText value="Nom:" />
+				<p:inputText value="#{rBean.selectedUser.nom}"></p:inputText>
+				<h:outputText value="Prénom:" />
+				<p:inputText value="#{rBean.selectedUser.prenom}"></p:inputText>
+				<h:outputText value="Profession:" />
+				<p:inputText value="#{rBean.selectedUser.profession}"></p:inputText>
+				<h:outputText value="Téléphone:" />
+				<p:inputText value="#{rBean.selectedUser.telephone}"></p:inputText>
+				<h:outputText value="Kurele:" />
+				<p:inputText value="#{rBean.selectedUser.kurel}"></p:inputText>
+				<h:outputText value="Date de naissance:" />
+				<p:calendar id="button" value="#{rBean.selectedUser.datenais}"
+					showOn="button" pattern="dd-MM-yyyy" />
+				<h:outputText value="User Address:" />
+				<p:inputTextarea value="#{rBean.selectedUser.address}" rows="1"
+					cols="18" counter="display" maxlength="100"
+					counterTemplate="{0} characters remaining." autoResize="false" />
+				<h:outputText value="" />
+				<h:outputText value="" />
+				<h:outputText value="" />
+				<h:outputText id="display" />
+				<f:facet name="footer">
+					<p:commandButton value="Update" update=":form:pdataTable, :growl"
+						oncomplete="handleSubmitRequest(xhr, status, args, 'userDlg','form'); "
+						actionListener="#{rBean.editUser}" />
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+	<p:growl id="growl" showDetail="true" life="5000" />
+
+	<script type="text/javascript">  
+    function handleSubmitRequest(xhr, status, args, dialogName, formName) {  
+            dialog = jQuery('#'+dialogName);
+        if(args.validationFailed) {  
+            dialog.effect("shake", { times:3 }, 100);  
+        } else {
+            clearForm(formName);
+            userDialog.hide(); 
+        }  
+    }
+    function clearForm(formName){
+        jQuery('#'+formName).each(function(){
+	        this.reset();
+	});
+    }
+</script>
+
+</h:body>
+
+</html>

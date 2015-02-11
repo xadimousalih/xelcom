@@ -1,6 +1,6 @@
 # xelcom
 Gestion des daaras de Serigne Saliou Mbacké
-This application use the above technologies:
+This application use the below technologies:
 Database
  ----> Postgres9
 Web Serveur

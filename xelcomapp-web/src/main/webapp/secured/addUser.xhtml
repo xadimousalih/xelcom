@@ -16,8 +16,10 @@
 		<p:menuitem value="View User" url="/viewUser.jsf" />
 	</p:tabMenu>
 	<h:form>
+		<h3>Welcome #{loginBean.username} </h3>
+		<h:commandLink action="#{loginBean.doLogout}" value="Logout" />
 		<p:panel header="Add User">
-			<h:panelGrid columns="4" >
+			<h:panelGrid columns="4">
 				<h:outputText value="User Name" />
 				<p:inputText value="#{rBean.name}"></p:inputText>
 				<h:outputText value="Nom" />
@@ -31,11 +33,16 @@
 				<h:outputText value="Kurele" />
 				<p:inputText value="#{rBean.kurel}"></p:inputText>
 				<h:outputText value="Date de naissance" />
-				<p:calendar id="button" value="#{rBean.datenais}" showOn="button" pattern="dd-MM-yyyy"/>				
+				<p:calendar id="button" value="#{rBean.datenais}" showOn="button"
+					pattern="dd-MM-yyyy" />
 				<h:outputText value="User Address" />
-				<p:inputTextarea value="#{rBean.address}" rows="1" cols="18" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="false" />
-			    <h:outputText value="" /><h:outputText value="" /><h:outputText value="" />					   
-			   <h:outputText id="display" />
+				<p:inputTextarea value="#{rBean.address}" rows="1" cols="18"
+					counter="display" maxlength="100"
+					counterTemplate="{0} characters remaining." autoResize="false" />
+				<h:outputText value="" />
+				<h:outputText value="" />
+				<h:outputText value="" />
+				<h:outputText id="display" />
 				<h:outputText value="Add Photo" />
 				<p:commandButton onclick="fileDialogWidget.show()"
 					value="Upload Photo"></p:commandButton>
@@ -53,6 +60,6 @@
 		</p:dialog>
 
 	</h:form>
-	
+
 </h:body>
 </html>

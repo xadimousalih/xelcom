@@ -12,8 +12,8 @@
 }
 </style>
 	<p:tabMenu activeIndex="0">
-		<p:menuitem value="Add User" url="/index.jsf" />
-		<p:menuitem value="View User" url="/viewUser.jsf" />
+		<p:menuitem value="Add User" url="/secured/addUser.xhtml?faces-redirect=true" />
+		<p:menuitem value="View User" url="/secured/viewUser.xhtml?faces-redirect=true" />
 	</p:tabMenu>
 	<h:form>
 		<h3>Welcome #{loginBean.username} </h3>
